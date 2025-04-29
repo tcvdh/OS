@@ -1,7 +1,17 @@
-[BITS 16]
-[ORG 0x7C00]
+; boot.asm
+
+BITS 16
+ORG 0x7C00
 
 start:
+    ; set up the stack and data segment
+    mov ax, 0           ; intermediate register
+    mov ds, ax          ; set DS to 0
+    mov es, ax          ; set ES to 0
+    mov ss, ax          ; set SS to 0
+    mov sp, 0x7C00      ; set stack pointer ss:sp 0000:7C00
+
+    ; execute the main function
     mov si, hello
     call print_string
 
@@ -18,7 +28,7 @@ print_string:
 
 
 ;data
-hello: db "Hello, TcvdhOS!", 0
+hello: db "Hello, welcome to my OS!", 0
 
 times 510 - ($ - $$) db 0
 dw 0xAA55
